@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 💗✨</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(135deg,#ffd6e8,#ffeef6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Poppins,sans-serif;
+  overflow:hidden;
+}
+
+.card,.letter,.final{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  max-width:340px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+  animation:pop .6s ease;
+}
+
+.letter,.final{display:none;}
+
+p{color:#444;font-size:16px;line-height:1.6;}
+
+.btn{
+  margin-top:15px;
+  padding:12px 22px;
+  border:none;
+  border-radius:30px;
+  background:#ff4d88;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.btn.no{background:#999;}
+
+.heart{
+  position:absolute;
+  font-size:24px;
+  animation:float 6s linear;
+  cursor:pointer;
+}
+
+.counter{
+  position:fixed;
+  top:15px;
+  right:15px;
+  background:white;
+  padding:8px 14px;
+  border-radius:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,.2);
+  display:none;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+@keyframes pop{
+  from{transform:scale(.8);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="counter" id="counter">💗 0</div>
+
+<!-- PROPOSAL -->
+<div class="card" id="proposal">
+  <p id="text">
+    hyieeeeeeeeeeeee myyyyyiiiiieeeee lovieeeee 😭🎀💗✨  
+    <br><br>
+    you scanned something cute 🌷🎀💗✨  
+    <br><br>
+    will you be my Valentine? 😛💋
+  </p>
+
+  <button class="btn" onclick="yes()">ok jaanu 💗✨</button>
+  <button class="btn no" onclick="no()">no (i hate u)</button>
+</div>
+
+<!-- HEART GAME -->
+<div class="letter" id="letter">
+  <p>
+    now collect **20 hearts** 😭🎀💗✨  
+    <br>
+    every heart = extra love 💋
+  </p>
+</div>
+
+<!-- FINAL STEP -->
+<div class="final" id="final">
+  <p>
+    okay stop 😭🎀💗✨  
+    <br><br>
+    you collected enough  
+    because you already have my heart 💗  
+    <br><br>
+    happy Valentine’s Day 🌷🎀💋
+  </p>
+</div>
+
+<script>
+let noCount=0;
+let hearts=0;
+let interval;
+
+function yes(){
+  document.getElementById("text").innerHTML="hehe ok jaanu 😭🎀💗✨";
+  setTimeout(startGame,800);
+}
+
+function no(){
+  noCount++;
+  const t=document.getElementById("text");
+
+  if(noCount===1){
+    t.innerHTML="hawww gndeee.. katti 😾😭🎀";
+  }else if(noCount===2){
+    t.innerHTML="u sure.. heh.. 💗✨";
+  }else{
+    t.innerHTML="k i get it.. allahfiz takecare 💌😭🎀";
+    setTimeout(startGame,900);
+  }
+}
+
+function startGame(){
+  document.getElementById("proposal").style.display="none";
+  document.getElementById("letter").style.display="block";
+  document.getElementById("counter").style.display="block";
+  interval=setInterval(spawnHeart,700);
+}
+
+function spawnHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💗";
+  h.style.left=Math.random()*100+"vw";
+
+  h.onclick=()=>{
+    hearts++;
+    document.getElementById("counter").innerText="💗 "+hearts;
+    h.remove();
+
+    if(hearts>=20){
+      endGame();
+    }
+  };
+
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+}
+
+function endGame(){
+  clearInterval(interval);
+  document.querySelectorAll(".heart").forEach(h=>h.remove());
+  document.getElementById("letter").style.display="none";
+  document.getElementById("counter").style.display="none";
+  document.getElementById("final").style.display="block";
+}
+</script>
+
+</body>
+</html>
